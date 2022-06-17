@@ -1,12 +1,21 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import Home from './components/Home';
+import {Navigate, Route, BrowserRouter as Router, Routes} from 'react-router-dom';
+import AddToWardrobe from './components/AddWardrobe';
+import { postNewItem } from './APIservices';
+import WhatDo from './components/WhatDo';
 
 function App() {
   return (
     <div className="App">
-      <Home/>
+      <Router>
+      <div>header lol</div>
+      <WhatDo/>
+      <Routes>
+        
+      </Routes>
+      </Router>
     </div>
   );
 }

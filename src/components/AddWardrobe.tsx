@@ -11,6 +11,7 @@ export default function  AddToWardrobe({onSubmit}: Props) {
     const [itemPrinted, setItemPrinted] = useState(false);
     const [itemColor, setItemColor] = useState<string[]>([]);
     const [secondaryColor, setSecondaryColor] = useState<string[]>([]);
+
     //type check boxes
     const [accessoryBox, setAccessoryBox] = useState(false);
     const [topBox, setTopBox] = useState(false);
@@ -18,38 +19,90 @@ export default function  AddToWardrobe({onSubmit}: Props) {
     const [shoeBox, setShoeBox] = useState(false);
 
     //printed check boxes
+    const [printedBox, setPrintedBox] =useState(false);
+    const [solidBox, setSolidBox] = useState(false);
 
-    //color check boxes
+    //primary color check boxes
+    const [redBox, setRedBox] = useState(false);
+    const [pinkBox, setPinkBox] = useState(false);
+    const [orangeBox, setOrangeBox] = useState(false);
+    const [yellowBox, setYellowBox] = useState(false);
+    const [greenBox, setGreenBox] = useState(false);
+    const [blueBox, setBlueBox] = useState(false);
+    const [purpleBox, setPurpleBox] = useState(false);
 
     //secondary color checkboxes/check for nullish?
 
     const handleTypeSet = (e: any) => {
         const typeValue = e.target.value;
-        
+        const typeChecked = e.target.checked;
+
+        if(typeChecked) {
+            setItemType(prev => [...prev, typeValue])
+        }  else {
+            setItemType(itemType.filter(t => t! == typeValue))
+        }
         // check for item type
         if(typeValue === "Accessory") {
-            setItemType(e.target.checked);
+            setAccessoryBox(e.target.checked);
         }
         if(typeValue === "Top") {
-            setItemType(e.target.checked);
+            setTopBox(e.target.checked);
         }
         if(typeValue === "Bottom") {
-            setItemType(e.target.checked)
+            setBottomBox(e.target.checked)
         }
         if(typeValue === "Shoes") {
-            setItemType(e.target.checked);
+            setShoeBox(e.target.checked);
         }
     }
 
     //check whether or not printed
-    const handlePrintChange = (e: any) => {
+    const handlePrintSet = (e:any) => {
         const printValue = e.target.value;
+        const printChecked = e.target.checked;
 
-        if (printValue === true) {
-            setItemPrinted(e.target.checked);
-        } // else false, I guess? 
+        if (printChecked) {
+            setItemPrinted(true);
+        } //item printed true means that it IS printed/textured
     }
 
+    //input primary color
+    const handlePColorSet = (e:any) => {
+        const pColorValue = e.target.value;
+        const pColorChecked = e.target.checked;
+
+        if (pColorChecked) {
+            setItemColor(prev => [...prev, pColorValue])
+        } else {
+            setItemColor(itemColor.filter(p => p! == pColorValue))
+        }
+
+        //
+        if(pColorValue === "Red") {
+            setRedBox(e.target.checked);
+        }
+        if (pColorValue === "Pink") {
+            setPinkBox(e.target.checked);
+        }
+        if(pColorValue === "Orange") {
+            setOrangeBox(e.target.checked);
+        }
+        if(pColorValue === "Yellow") {
+            setYellowBox(e.target.checked);
+        }
+        if(pColorValue === "Green") {
+            setGreenBox(e.target.checked);
+        }
+        if(pColorValue === "Blue") {
+            setBlueBox(e.target.checked);
+        }
+        if(pColorValue === "Purple") {
+            setPurpleBox(e.target.checked);
+        }
+    }
+
+    //
     function handleSubmit(e:FormEvent) {
         e.preventDefault();
         const CurrentItem: Item = {
@@ -65,20 +118,22 @@ export default function  AddToWardrobe({onSubmit}: Props) {
 
     return (
         <div className = "AddToWardrobe">
+
             <form onSubmit={handleSubmit}>
                 <label className = "ATW__question">What would you like to add?</label>
-                <div className="ATW__input">
-                    <input type="checkbox" value="Accessory" onChange={handleTypeSet} checked={accessoryBox}>Accessory</input>
-                    <input type="checkbox" value="Top" onChange={handleTypeSet} checked={topBox}>Top</input>
-                    <input type="checkbox" value="Bottom" onChange={handleTypeSet} checked={bottomBox}>Bottom</input>
-                    <input type="checkbox" value="Shoes" onChange={handleTypeSet} checked={shoeBox}>Shoes</input>
+                <div className="ATW__boxes">
+                    <input type="checkbox" value="Accessory" onChange={handleTypeSet} checked={accessoryBox}/> Accessory
+                    <input type="checkbox" value="Top" onChange={handleTypeSet} checked={topBox}/>Top
+                    <input type="checkbox" value="Bottom" onChange={handleTypeSet} checked={bottomBox}/>Bottom
+                    <input type="checkbox" value="Shoes" onChange={handleTypeSet} checked={shoeBox}/>Shoes
                 </div>
 
-                <label>Is this item printed, textured, or solid?</label>
+                <label>Check here if the item is printed/multicolored or textured. If it is solid, leave the checkbox empty.</label>
                 <div className="ATW__primarycolor">
-                    <input type="checkbox"></input>
+                    <input type="checkbox"/>
                 </div>
 
+                <input className='submit' type="submit"value ="Submit"/>
 
             </form>
         </div>
